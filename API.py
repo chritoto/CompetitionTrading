@@ -27,10 +27,7 @@ class API:
         and the corresponding values"""
     def getPastPrice(self,action, debut, fin):
         return self.market.getPastPrice(action, debut, fin)
-        
-    def getArticles(self,action, debut):
-        pass
-    
+
     """Returns a dictionary of the current stocks owned by the user"""
     def getUserStocks(self):
         return self.market.getStocks(self.ID)
@@ -54,13 +51,15 @@ class API:
     """Adds the stock, the price limit and the quantity to the list of limitBuys
         Returns 0 if successfull, 1 if the stock is wrongly inputed,
          2 if asked to more than cash available and 3 if the limit of 
-         20 current limit buys or sells is reached"""
+         20 current limit buys or sells is reached.
+         The buy is kept for 7 days after which it is cancelled"""
     def limitBuy(self, action, limit, quantity):
         return self.market.limitBuy(self.ID, action, limit, quantity)
     
     """Adds the stock, the price limit and the quantity to the list of limitSells
         Returns 0 if successfull, 1 if the stock is wrongly inputed,
          2 if asked to sell more than currently owned and 3 if the limit of 
-         20 current limit buys or sells is reached"""
+         20 current limit buys or sells is reached.
+         The sell is kept for 7 days after which it is cancelled"""
     def limitSell(self, action, limit, quantity):
         return self.market.limitSell(self.ID, action, limit, quantity)

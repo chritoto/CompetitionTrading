@@ -14,7 +14,7 @@ class Trader:
     """
     
     #Nom de l'equipe:
-    equipe = 'TEST'
+    equipe = ''
 
     def __init__(self, API):
         
@@ -38,7 +38,4 @@ class Trader:
     def trade(self):
         time.sleep(0.05)
         self.API.marketBuy('LAL',1)
-       # print(self.API.getUserStocks())
-        #print(self.API.getPastPrice("ACPC", datetime.datetime(2019,1,1),datetime.datetime(2020, 4, 2)))
-        #print(self.API.getPrice("ACPC"))
     

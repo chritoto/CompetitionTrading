@@ -49,11 +49,11 @@ class Market:
     
     
     
-    def __init__(self, qDisp):
+    def __init__(self, qDisp, vitesse):
         self.currentDateTime = datetime.datetime(2020, 3, 27, 9, 30, 0)
         self.accounts = {}
         self.qDisp = qDisp
-        
+        self.sleepTime = 1/vitesse
         
         #Import Data
         with open(self.fACPC, 'r') as file:
@@ -103,7 +103,7 @@ class Market:
         
     def countTime(self):
         while getattr(self.timer, "run", True):
-            time.sleep(0.025)
+            time.sleep(self.sleepTime)
             self.currentDateTime += datetime.timedelta(0,0,0,0,5)
             if(self.currentDateTime.time() > datetime.time(16,0,0)):
                 self.currentDateTime += datetime.timedelta(hours=17,minutes=30)
@@ -253,7 +253,7 @@ class Market:
         cost = limit * quantity
         if cost > self.accounts[ID].getCash():
             return 2
-        return self.accounts[ID].addWaitList(action, True, limit, quantity, self.currentDateTime + datetime.timedelta(days=5))
+        return self.accounts[ID].addWaitList(action, True, limit, quantity, self.currentDateTime + datetime.timedelta(days=7))
     
     def limitSell(self, ID, action, limit, quantity):
         if action not in self.listStocks:
@@ -262,7 +262,7 @@ class Market:
             return None
         if quantity > self.accounts[ID].getStocks()[action]:
             return 2
-        return self.accounts[ID].addWaitList(action, False, limit, quantity, self.currentDateTime + datetime.timedelta(days=5))
+        return self.accounts[ID].addWaitList(action, False, limit, quantity, self.currentDateTime + datetime.timedelta(days=7))
     
         
         

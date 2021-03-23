@@ -8,6 +8,9 @@ from API import API
 from Market import Market
 from Visualization import Visual
 
+#À modifier pour changer la vitesse de simulation
+vitesse = 400
+
 def initVisual(qDisp, qStart):
     app = Visual(qDisp, qStart)
     app.app.run_server()
@@ -16,12 +19,11 @@ def main():
     
     qDisp = Queue()
     qStart = Queue()
-    market = Market(qDisp)
+    market = Market(qDisp, vitesse)
     
     Tapp = Process(target=initVisual, args=(qDisp, qStart,))
     Tapp.start()
     
-    print("ok")
     
     start = False
     while(not start):
