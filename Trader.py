@@ -30,6 +30,7 @@ class Trader:
         self.t = threading.currentThread()
         while getattr(self.t, "run", True):
             self.trade()
+            time.sleep(0)
             
             
             
