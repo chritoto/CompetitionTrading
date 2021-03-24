@@ -21,10 +21,11 @@ class Visual:
     
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-    def __init__(self, qDisp, qStart):
+    def __init__(self, qDisp, qStart, qData):
         self.start = False
         self.qDisp = qDisp
         self.qStart = qStart
+        self.qData = qData
         
         self.oldTime = time.time()
         
@@ -68,8 +69,10 @@ class Visual:
             html.Div([
                 html.H4('Compétition IEEE'),
                 html.Button('Start', id='buttonStart'),
-                html.Button('Stop', id='buttonStop'),
+                html.Button('View all data', id='buttonView'),
+                html.Button('Stop server', id='buttonStop'),
                 html.P(id='StartPlaceholder'),
+                html.P(id='ViewPlaceholder'),
                 html.P(id='StopPlaceholder'),
                 html.Div([
                     html.Div([
@@ -101,6 +104,8 @@ class Visual:
                   Input('interval-component', 'n_intervals'))(self.update_table)
         self.app.callback(Output('StartPlaceholder', 'children'),
                           Input('buttonStart', 'n_clicks'))(self.Start)
+        self.app.callback(Output('ViewPlaceholder', 'children'),
+                          Input('buttonView', 'n_clicks'))(self.View)
         self.app.callback(Output('StopPlaceholder', 'children'),
                           Input('buttonStop', 'n_clicks'))(self.Stop)
     
@@ -108,6 +113,13 @@ class Visual:
         if n_clicks:
             self.qStart.put(True)
             self.start = True
+            return None
+        else:
+            return None
+        
+    def View(self, n_clicks):
+        if n_clicks:
+            self.qData.put(True)
             return None
         else:
             return None
@@ -140,7 +152,6 @@ class Visual:
     
         
         if(self.start):
-            print(time.time()-self.oldTime)
             self.oldTime = time.time()
             prices, self.currentDateTime, self.equipes = self.qDisp.get()
             

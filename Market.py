@@ -3,6 +3,7 @@ from Account import Account
 import uuid 
 import csv
 from multiprocessing import Process, Queue
+import plotly.graph_objects as go
 
 import threading
 import time
@@ -171,7 +172,7 @@ class Market:
         
     def updateTotalValues(self):
         for key in self.accounts.keys():
-            self.accounts[key].updateTotalValue(self.prices)
+            self.accounts[key].updateTotalValue(self.prices, self.currentDateTime)
         
         
     def createAccount(self):
@@ -184,6 +185,18 @@ class Market:
         if not ID in self.accounts:
             return None
         self.accounts[ID].nom = nom
+        
+    def displayData(self):
+        for key in self.accounts.keys():
+            fig = go.Figure(go.Scatter(
+                x = self.accounts[key].TotalValueHist[0],
+                y = self.accounts[key].TotalValueHist[1],
+                connectgaps=True
+            ))
+            fig.update_layout(xaxis={'type': 'date',
+                                      'rangebreaks':[dict(bounds=["sat", "mon"]),
+                                     {'pattern': 'hour', 'bounds': [16, 9.5]}]})
+            fig.show()
     
     def getTime(self):
         return self.currentDateTime

@@ -37,6 +37,5 @@ class Trader:
     """Your trading algorithm goes here!
         The function is called continuously"""
     def trade(self):
-        time.sleep(0.05)
         self.API.marketBuy('LAL',1)
     

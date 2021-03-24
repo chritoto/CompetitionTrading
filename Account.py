@@ -15,6 +15,7 @@ class Account:
         self.totalvalue = startCash
         self.actions = {}
         self.waitlist = []
+        self.TotalValueHist = [[],[]]
         for stock in liststocks:
             self.actions[stock] = 0
         
@@ -42,11 +43,13 @@ class Account:
     def removeWaitList(self, element):
         self.waitlist.remove(element)
     
-    def updateTotalValue(self, stocksPrice):
+    def updateTotalValue(self, stocksPrice, currentTime):
         stockValue = 0
         for i in self.actions.keys():
             stockValue += stocksPrice[i] * self.actions[i]
         self.totalvalue = self.cash + stockValue
+        self.TotalValueHist[0].append(currentTime)
+        self.TotalValueHist[1].append(self.totalvalue)
         return self.totalvalue
     
     def getTotalValue(self):
