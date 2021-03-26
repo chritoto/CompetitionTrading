@@ -29,7 +29,10 @@ class Trader:
         
         self.t = threading.currentThread()
         while getattr(self.t, "run", True):
-            self.trade()
+            try:
+                self.trade()
+            except:
+                pass
             time.sleep(0)
             
             
@@ -37,5 +40,5 @@ class Trader:
     """Your trading algorithm goes here!
         The function is called continuously"""
     def trade(self):
-        self.API.marketBuy('LAL',1)
+        pass
     

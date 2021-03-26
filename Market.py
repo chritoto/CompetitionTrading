@@ -104,12 +104,15 @@ class Market:
         
     def countTime(self):
         while getattr(self.timer, "run", True):
+            self.oldTime = time.time()
             time.sleep(self.sleepTime)
-            self.currentDateTime += datetime.timedelta(0,0,0,0,5)
-            if(self.currentDateTime.time() > datetime.time(16,0,0)):
-                self.currentDateTime += datetime.timedelta(hours=17,minutes=30)
-                if(self.currentDateTime.weekday()==5):
-                    self.currentDateTime += datetime.timedelta(days=2)
+            i = int((time.time()-self.oldTime)/self.sleepTime)
+            for j in range(i):
+                self.currentDateTime += datetime.timedelta(0,0,0,0,5)
+                if(self.currentDateTime.time() > datetime.time(16,0,0)):
+                    self.currentDateTime += datetime.timedelta(hours=17,minutes=30)
+                    if(self.currentDateTime.weekday()==5):
+                        self.currentDateTime += datetime.timedelta(days=2)
             self.updatePrices()
             self.updateETF()
             self.manageWaitLists()
