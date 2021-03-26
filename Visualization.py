@@ -62,7 +62,6 @@ class Visual:
                     "ETF:")
         self.fig = plotly.subplots.make_subplots(rows=6, cols=1, shared_xaxes=True, vertical_spacing=0.05, subplot_titles=titles)
         self.figTot = go.Figure()
-        self.table = go.Figure()
         
         self.app = dash.Dash(__name__, external_stylesheets=self.external_stylesheets)
         self.app.layout = html.Div(
@@ -239,6 +238,14 @@ class Visual:
         return self.figTot
     
     def update_table(self,n):
-        values = [self.equipes[key] for key in self.equipes.keys()]
+        values = [[self.equipes[key][0],
+                   "{:.2f}".format(self.equipes[key][1]),
+                   "{:.2f}".format(self.equipes[key][2]),
+                   self.equipes[key][3],
+                   self.equipes[key][4],
+                   self.equipes[key][5],
+                   self.equipes[key][6],
+                   self.equipes[key][7],
+                   self.equipes[key][8]] for key in self.equipes.keys()]
         
         return values, self.column
