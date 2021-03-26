@@ -10,7 +10,7 @@ from Visualization import Visual
 import matplotlib.pyplot as plt
 
 #À modifier pour changer la vitesse de simulation
-vitesse = 400
+vitesse = 40
 
 def initVisual(qDisp, qStart, qData):
     app = Visual(qDisp, qStart, qData)

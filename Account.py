@@ -16,6 +16,7 @@ class Account:
         self.actions = {}
         self.waitlist = []
         self.TotalValueHist = [[],[]]
+        self.file = None
         for stock in liststocks:
             self.actions[stock] = 0
         

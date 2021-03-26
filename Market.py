@@ -188,6 +188,9 @@ class Market:
         if not ID in self.accounts:
             return None
         self.accounts[ID].nom = nom
+        f = open("logs/"+nom+".txt", "w")
+        f.close()
+        self.accounts[ID].file = open("logs/"+nom+".txt", "a")
         
     def displayData(self):
         for key in self.accounts.keys():
@@ -247,6 +250,8 @@ class Market:
             return 2
         self.accounts[ID].addCash(-cost)
         self.accounts[ID].addStock(action, quantity)
+        self.accounts[ID].file.write('BUY: '+action+ " x"+str(quantity)+" at "+self.currentDateTime.strftime("%d/%m/%Y,%H:%M:%S")+"\n")
+        self.accounts[ID].file.flush()
         return 0
     
     def marketSell(self, ID, action, quantity):
@@ -259,6 +264,8 @@ class Market:
             return 2
         self.accounts[ID].addCash(cost)
         self.accounts[ID].addStock(action, -quantity)
+        self.accounts[ID].file.write('SELL: '+action+ " x"+str(quantity)+" at "+self.currentDateTime.strftime("%d/%m/%Y,%H:%M:%S")+"\n")
+        self.accounts[ID].file.flush()
         return 0
     
     def limitBuy(self, ID, action, limit, quantity):
