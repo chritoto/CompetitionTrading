@@ -4,6 +4,7 @@ import uuid
 import csv
 from multiprocessing import Process, Queue
 import plotly.graph_objects as go
+import os
 
 import threading
 import time
@@ -94,6 +95,9 @@ class Market:
         
         self.updateETF()
         self.updateqDisp()
+        
+        if not os.path.exists("logs"):
+            os.makedirs("logs")
         
     def start(self):
         self.timer = threading.Thread(target=self.countTime)
