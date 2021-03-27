@@ -28,6 +28,7 @@ class Market:
     dOZV = {}
     dSHT = {}
     dLAL = {}
+    dETF = {}
     
     prices = {
         'ACPC' : 0,
@@ -140,6 +141,7 @@ class Market:
         for key in self.pricesDiv.keys():
             val += self.prices[key]/self.pricesDiv[key]
         self.prices['ETF'] = val
+        self.dETF[self.currentDateTime] = val
         
     def updateqDisp(self):
         equipes = {}
